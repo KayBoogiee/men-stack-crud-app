@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Plant</title>
+</head>
+<body>
+  <h1>Add New Plant</h1>
+  <form action="/plants" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" name="plant[name]" id="name" required><br>
+
+    <label for="type">Type:</label>
+    <input type="text" name="plant[type]" id="type" required><br>
+
+    <label for="description">Description:</label>
+    <textarea name="plant[description]" id="description"></textarea><br>
+
+    <button type="submit">Add Plant</button>
+  </form>
+  <a href="/plants">Back to Plants List</a>
+</body>
+</html>
