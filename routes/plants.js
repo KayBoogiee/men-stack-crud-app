@@ -1,38 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const Plant = require('../models/Plant');
+const Plant = require('../models/plant');
 
-// Index
+// INDEX route - show all plants
 router.get('/', async (req, res) => {
-  const plants = await Plant.find({});
-  res.render('index', { plants });
+  try {
+    const plants = await Plant.find({});
+    res.render('index', { plants });
+  } catch (err) {
+    res.send(err);
+  }
 });
 
-// New
-router.get('/new', (req, res) => res.render('new'));
+// NEW route - show form to create a plant
+router.get('/new', (req, res) => {
+  res.render('new');
+});
 
-// Create
+// CREATE route - add new plant
 router.post('/', async (req, res) => {
-  await Plant.create(req.body.plant);
-  res.redirect('/');
+  try {
+    await Plant.create(req.body);
+    res.redirect('/plants');
+  } catch (err) {
+    res.send(err);
+  }
 });
 
-// Edit
+// EDIT route
 router.get('/:id/edit', async (req, res) => {
-  const plant = await Plant.findById(req.params.id);
-  res.render('edit', { plant });
+  try {
+    const plant = await Plant.findById(req.params.id);
+    res.render('edit', { plant });
+  } catch (err) {
+    res.send(err);
+  }
 });
 
-// Update
+// UPDATE route
 router.put('/:id', async (req, res) => {
-  await Plant.findByIdAndUpdate(req.params.id, req.body.plant);
-  res.redirect('/');
-});
-
-// Delete
-router.delete('/:id', async (req, res) => {
-  await Plant.findByIdAndDelete(req.params.id);
-  res.redirect('/');
+  try {
+    await Plant.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect('/plants');
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 module.exports = router;
